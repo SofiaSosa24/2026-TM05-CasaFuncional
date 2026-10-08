@@ -1,0 +1,15 @@
+git status
+permite ver si alguno inicio el uso del repositorio
+
+git init
+inicia el uso del repositorio
+
+git commit
+guarda los avances ya existentes o borrados en el repositorio
+
+git push
+los sube en el repositorio
+
+git add
+guarda los archivos ya existentes o borrados en el repositorio
+
