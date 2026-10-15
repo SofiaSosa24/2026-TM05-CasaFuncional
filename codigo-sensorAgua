@@ -1,0 +1,78 @@
+#include <Servo.h>
+#include <Stepper.h>
+
+//2048 pasos es aproximadamente una vuelta
+const int pasosPorVuelta = 2048;
+
+Servo tender;
+Servo servo1;
+Servo servo2;
+
+const int Servo1 = 4;
+const int Servo2 = 3;
+
+Stepper motor(pasosPorVuelta, 8, 10, 9, 11);
+
+int sensorAgua = A0;
+int valorAgua = 0;
+int umbral = 300;
+
+void setup() {
+  Serial.begin(9600);
+  
+  tender.attach(9);
+  tender.write(0);
+
+  servo1.attach(Servo1);
+  servo2.attach(Servo2);
+  servo1.write(90);// Ventanas abiertas
+  servo2.write(90);
+
+	motor.setSpeed(10);
+  
+  Serial.println("Sistema iniciado");
+}
+
+
+void loop() {
+  valorAgua = analogRead(sensorAgua);
+  Serial.print("Valor del agua/sensor: ");
+  Serial.println(valorAgua);
+
+  if (valorAgua > umbral) 
+  {
+    Serial.println("AGUA DETECTADA");
+    
+    tender.write(90);
+    Serial.println("Tender bajo techo");
+
+    servo1.write(0);// Cerrar las ventanas
+    servo2.write(0);
+    Serial.println("Ventanas cerradas");
+
+    Serial.println("Extendiendo toldo...");
+    motor.step(1024);// Gira el rodillo para sacar el toldo
+    delay(1500);
+    Serial.println("Toldo extendido/activado");
+    
+    delay(1000);
+  } 
+  else 
+  {
+    Serial.println("Sensor seco");
+    
+    tender.write(0);
+    Serial.println("Tender afuera");
+
+    servo1.write(90);// Abrir las ventanas
+    servo2.write(90);
+    Serial.println("Ventanas abiertas");
+
+    Serial.println("Guardando toldo...");
+    motor.step(-1024);// Gira en sentido contrario para guardar el toldo
+    delay(1500);
+    Serial.println("Toldo guardado/desactivado");
+  }
+
+  delay(500);
+}
