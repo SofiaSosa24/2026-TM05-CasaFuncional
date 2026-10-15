@@ -13,7 +13,7 @@ const int Servo2 = 3;
 Stepper motor(pasosPorVuelta, 8, 10, 9, 11);
 
 int sensorAgua = A0;
-int valorAgua = 0;
+int valorAgua;
 int umbral = 300;
 
 void setup() {
