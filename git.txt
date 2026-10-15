@@ -1,15 +1,35 @@
-git status
-permite ver si alguno inicio el uso del repositorio
+git config --global user.name "Tu Nombre" - (Configurar el nombre de usuario)
 
-git init
-inicia el uso del repositorio
+git config --global user.email "tuemail@ejemplo.com" - (Configurar el correo electrónico)
 
-git commit
-guarda los avances ya existentes o borrados en el repositorio
+git config -l - (Ver la configuración actual)
 
-git push
-los sube en el repositorio
+git init - (Inicializar un repositorio)
 
-git add
-guarda los archivos ya existentes o borrados en el repositorio
+git clone <url> - (Clonar un repositorio remoto)
 
+git add <archivo> - (Agregar un archivo al área de preparación)
+
+git add - (Agregar todos los archivos)
+
+git status - (Ver el estado del repositorio)
+
+git commit -m "Mensaje del commit" - (Realizar un commit con mensaje)
+
+git commit --amend -m "Nuevo mensaje" - (Modificar el último commit)
+
+git remote add origin <url> - (Agregar un repositorio remoto)
+
+git push origin <rama> - (Subir cambios al repositorio remoto)
+
+git pull origin <rama> - (Descargar cambios del repositorio remoto)
+
+git branch <nombre_rama> - (Crear una nueva rama)
+
+git checkout <nombre_rama> - (Cambiar a una rama existente)
+
+git merge <nombre_rama> - (Fusionar ramas)
+
+git log - (Ver el historial de commits)
+
+git diff - (Ver los cambios realizados)
