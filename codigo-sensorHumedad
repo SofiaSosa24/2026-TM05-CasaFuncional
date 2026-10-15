@@ -8,7 +8,7 @@ void setup() {
   Serial.begin(9600);
   
   pinMode(rele, OUTPUT);
-  digitalWrite(rele, HIGH);// Bomba apagada al comenzar
+  digitalWrite(rele, HIGH); //Bomba apagada al comenzar
 }
 
 void loop() {
@@ -16,14 +16,15 @@ void loop() {
   Serial.print("Humedad de la tierra: ");
   Serial.println(valorHumedad);
 
-  if (valorHumedad > 600)// Si la tierra está seca
+  if (valorHumedad > umbral) //Si la tierra está seca
   {
     Serial.println("TIERRA SECA");
 
     digitalWrite(rele, LOW);
     Serial.println("Encendiendo bomba...");
-    delay(3000);// La bomba riega durante 3 segundos
+    delay(3000); //La bomba riega durante 3 segundos
     digitalWrite(rele, HIGH);
+    delay(1000);
   }
   else 
   {
@@ -32,5 +33,5 @@ void loop() {
     digitalWrite(rele, HIGH);
   }
 
-  delay(1000);
+  delay(500);
 }
