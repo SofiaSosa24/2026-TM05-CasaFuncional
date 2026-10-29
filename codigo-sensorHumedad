@@ -1,36 +1,36 @@
-int rele = 7;
+const int rele = 7;
 
-int sensorHumedad = A0;
+const int sensorHumedad = A0;
 int valorHumedad;
-int umbral = 600;
+const int umbral1 = 900;
 
 void setup() {
   Serial.begin(9600);
-  
+
   pinMode(rele, OUTPUT);
-  digitalWrite(rele, HIGH); //Bomba apagada al comenzar
+  digitalWrite(rele, HIGH); // Bomba apagada (relé activo en HIGH)
 }
 
 void loop() {
   valorHumedad = analogRead(sensorHumedad);
+
   Serial.print("Humedad de la tierra: ");
   Serial.println(valorHumedad);
 
-  if (valorHumedad > umbral) //Si la tierra está seca
-  {
+  if (valorHumedad > umbral1) {
     Serial.println("TIERRA SECA");
+    Serial.println("Encendiendo bomba...");
+
+    digitalWrite(rele, HIGH);
+    delay(3000);
 
     digitalWrite(rele, LOW);
-    Serial.println("Encendiendo bomba...");
-    delay(3000); //La bomba riega durante 3 segundos
-    digitalWrite(rele, HIGH);
-    delay(1000);
-  }
-  else 
-  {
-    Serial.println("TIERRA HÚMEDA");
     Serial.println("Bomba apagada");
-    digitalWrite(rele, HIGH);
+
+  } else {
+    Serial.println("TIERRA HUMEDA");
+    digitalWrite(rele, LOW);
+    Serial.println("Bomba apagada");
   }
 
   delay(500);
