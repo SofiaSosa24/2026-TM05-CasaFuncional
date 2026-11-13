@@ -7,30 +7,29 @@ Servo tender;
 Servo servo1;
 Servo servo2;
 
-int Servo1 = 4;
-int Servo2 = 3;
-int Tender = 7;
+int Servo1 = 5;
+int Servo2 = 6;
+int Tender = 3;
 
 Stepper motor(pasosPorVuelta, 8, 10, 9, 11);
 
-int sensorAgua = A0;
+int sensorAgua = A1;
 int valorAgua;
 int umbral = 300;
-
-// Estado del toldo
-bool toldoExtendido = false;
 
 void setup() {
   Serial.begin(9600);
 
   tender.attach(Tender);
-  tender.write(0);
+  tender.write(90);
+  Serial.println("Tender afuera");
 
   servo1.attach(Servo1);
   servo2.attach(Servo2);
 
   servo1.write(0);
   servo2.write(0);
+  Serial.println("Ventanas abiertas");
 
   motor.setSpeed(10);
 
@@ -44,11 +43,11 @@ void loop() {
   Serial.print("Valor del agua/sensor: ");
   Serial.println(valorAgua);
 
-  if (valorAgua > umbral && !toldoExtendido) {
+  if (valorAgua > umbral) {
 
-    Serial.println("AGUA DETECTADA");
+    Serial.println("SENSOR MOJADO");
 
-    tender.write(90);
+    tender.write(0);
     Serial.println("Tender bajo techo");
 
     servo1.write(90);
@@ -57,15 +56,14 @@ void loop() {
 
     Serial.println("Extendiendo toldo...");
     motor.step(12288); // 6 vueltas
-    toldoExtendido = true;
     Serial.println("Toldo extendido. Motor detenido.");
   }
 
-  else if (valorAgua <= umbral && toldoExtendido) {
+  else if (valorAgua <= umbral) {
 
     Serial.println("SENSOR SECO");
 
-    tender.write(0);
+    tender.write(90);
     Serial.println("Tender afuera");
 
     servo1.write(0);
@@ -74,7 +72,6 @@ void loop() {
 
     Serial.println("Guardando toldo...");
     motor.step(-12288); // 6 vueltas inversas
-    toldoExtendido = false;
     Serial.println("Toldo guardado. Motor detenido.");
   }
 
